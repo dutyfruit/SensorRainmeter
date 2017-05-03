@@ -2,9 +2,9 @@
 
 
 unsigned int CRC16 ( unsigned int DAT )  { // Calcul crc16
- static  volatile unsigned char  i,j,k;
- unsigned int C;
- static  volatile  unsigned char Trame[4];
+static  volatile unsigned char  i,j,k;
+unsigned int C;
+static  volatile  unsigned char Trame[4];
  Trame[0] = DAT>>8;
  //Trame[3]=DAT;
  i=0;

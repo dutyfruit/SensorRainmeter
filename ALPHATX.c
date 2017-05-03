@@ -131,9 +131,9 @@ while (IRQ);
 }
 //******************************************************************************
 void  GPIO (void){
- WDTCONbits.DEVCFG=1;
+ WDTCONbits.DEVCFG=5;
  ANCON0bits.PCFG4= 1;
- WDTCONbits.DEVCFG=0;
+ WDTCONbits.DEVCFG=6;
  TRISAbits.TRISA4=0;
  TRISBbits.TRISB0=1;
  RST = 0;

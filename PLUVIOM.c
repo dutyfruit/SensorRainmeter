@@ -12,6 +12,7 @@
 #include "ALPHATX.h"
 #include "CR.h"
 
+
 #pragma config WDTEN = OFF
 #pragma config FOSC = HS
 #pragma config XINST = OFF
@@ -34,34 +35,39 @@ void main(void) {
 
   //******************************************************************************
   // WRITE ON LCD
-  init_Lcd ();
-  //Lcd_Writext ("BCD",0,64);
+  //init_Lcd ();
+  //Lcd_Image (Bateau);
+  //Lcd_Writext ("````LACROIX`ROUGE`BREST``",2,0);
+  //_delay_ms(1000);
   //Lcd_clear ();
+  init_Lcd ();
   Lcd_Writext ("````PLUVIOMETRIE`",1,0);
   Lcd_Writext ("````LACROIX`ROUGE`BREST``",2,0);
   Lcd_Writext ("````PRECIPITATION`",3,0);
   Lcd_Writext ("`",4,0);
+
   init_timer0();
+    
   //Lcd_WriteInt (0x09,5,20,2,2);
   NbAuget = HEX_BCD(N_AUGET()); // convertir la vitesse en valeur decimale
-  //nPrecipitation = NbAuget*0.2;// recupere la valeur des prï¿½cipitation
-  Lcd_WriteInt (NbAuget,5,20,2,1);
-  Lcd_Writext ("`MM;H`",5,30);
+  nPrecipitation = NbAuget * 2;// recupere la valeur des prï¿½cipitation
+  Lcd_WriteInt (HEX_BCD(nPrecipitation),5,30,3,1);
+  Lcd_Writext ("`microM;H`",5,60);
   //Lcd_data (((nPrecipitation>>4)&0x0f)+0x30); // convertir la dizaine en ASCII puis afficher sur LCD
   //Lcd_data ((nPrecipitation&0x0f)+0x30); // convertir l'unit?  en ASCII puis afficher sur LCD
   //******************************************************************************
 
 
   //******************************************************************************
-  // INIT EMETTEUR RADIO
-  GPIO ();
-  INIT_ALPHA_MODULE ();
-  while (1){
-    Wake_up (0x164);
-    CRC = CRC16 (4);
-    INIT_ALPHA_MODULE ();
-    Send_FSK_DATA (1,2,NbAuget);
-  }
+  //(-,njjjjjjjjjjjjjjjjjjjjjjjjù^bghjFV>LY./09UYVV0l)ôc ^'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''=c x$)<^9BN999GFFFFFFFFFF7INIT EMETTEUR RADIO
+  //GPIO ();
+  //INIT_ALPHA_MODULE ();
+  //while (1){
+    //Wake_up (0x164);
+    //CRC = CRC16 (4);
+   // INIT_ALPHA_MODULE ();
+   // Send_FSK_DATA (1,2,nPrecipitation);
+ // }
   //******************************************************************************
 while (1);
 }
