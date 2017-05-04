@@ -26,10 +26,14 @@ void main(void) {
   // CONFIGURE VARIABLES
   unsigned int i;
   unsigned int nPrecipitation;
+  unsigned int nPrecipitation1;
+  unsigned int nPrecipitation2;
+  unsigned int nPrecipitation3;
+  
   unsigned int NbAuget;
   NbAuget = 0;
   unsigned int tempe,CRC;
-  char Trame[4] ={0,1,2,3};
+  char Trame[4] = {0,1,2,3};
   //******************************************************************************
 
 
@@ -40,26 +44,31 @@ void main(void) {
   //Lcd_Writext ("````LACROIX`ROUGE`BREST``",2,0);
   //_delay_ms(1000);
   //Lcd_clear ();
+  
   init_Lcd ();
-  Lcd_Writext ("````PLUVIOMETRIE`",1,0);
-  Lcd_Writext ("````LACROIX`ROUGE`BREST``",2,0);
+  Lcd_Writext ("````PLUVIOMETRIE`",0,0);
+  Lcd_Writext ("````LA`CROIX`ROUGE`BREST`",1,0);
   Lcd_Writext ("````PRECIPITATION`",3,0);
-  Lcd_Writext ("`",4,0);
-
+  while(1){
   init_timer0();
-    
-  //Lcd_WriteInt (0x09,5,20,2,2);
+ 
   NbAuget = HEX_BCD(N_AUGET()); // convertir la vitesse en valeur decimale
   nPrecipitation = NbAuget * 2;// recupere la valeur des prï¿½cipitation
-  Lcd_WriteInt (HEX_BCD(nPrecipitation),5,30,3,1);
-  Lcd_Writext ("`microM;H`",5,60);
-  //Lcd_data (((nPrecipitation>>4)&0x0f)+0x30); // convertir la dizaine en ASCII puis afficher sur LCD
-  //Lcd_data ((nPrecipitation&0x0f)+0x30); // convertir l'unit?  en ASCII puis afficher sur LCD
+  
+  nPrecipitation1 = nPrecipitation % 10;// valeur dizaine ^-1 
+  nPrecipitation2 = (nPrecipitation % 100) / 10; //valeur des unités
+  nPrecipitation3 = (nPrecipitation%1000) /100;//valeur des dizaines ^1
+  
+  Lcd_WriteInt (HEX_BCD(nPrecipitation3),5,20,1,1);
+  Lcd_Writext ("`<`",5,34);
+  Lcd_WriteInt (HEX_BCD(nPrecipitation2),5,27,1,1);
+  Lcd_WriteInt (HEX_BCD(nPrecipitation1),5,38,1,1);
+  Lcd_Writext ("`MM;H`",5,45);
+  }
   //******************************************************************************
 
 
-  //******************************************************************************
-  //(-,njjjjjjjjjjjjjjjjjjjjjjjjù^bghjFV>LY./09UYVV0l)ôc ^'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''=c x$)<^9BN999GFFFFFFFFFF7INIT EMETTEUR RADIO
+  //*****************************************************************************
   //GPIO ();
   //INIT_ALPHA_MODULE ();
   //while (1){
@@ -69,17 +78,7 @@ void main(void) {
    // Send_FSK_DATA (1,2,nPrecipitation);
  // }
   //******************************************************************************
-while (1);
+  while(1);
 }
 
-//init_Lcd ();
-//Lcd_Writext ("BCD",0,64);
-//Lcd_clear ();
-//Lcd_Writext ("PLUVIOMETRIE`",1,0);
-//Lcd_Writext ("BTS`SN`",2,0);
-//Lcd_Writext ("PRECIPITATION`",3,0);
-//Lcd_Writext ("`",4,0);
-//Lcd_Writext ("`",5,0);
-//Lcd_Writext ("````````DATA``MM[H`",6,0);
-//for (i=0;i<1204;i++)
-//{Lcd_data(0xFF) ;}
+
