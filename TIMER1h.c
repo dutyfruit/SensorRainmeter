@@ -21,7 +21,7 @@ unsigned int N_AUGET (void)
    TMR1H = 0;
    TMR1L = 0; // valeur initiale du registre TMR1L (création un temps de 1 ms)
    PIR1bits.TMR1IF = 0;  // Mettre l?indicateur de //dépassement du timer 1 à 0
-   for (i=0 ;i < 572; i++) // répéter 9 fois
+   for (i=0 ;i < 250; i++) // répéter 9 fois 1 min = 572
    {
       T1CONbits.TMR1ON = 1; // Démarrage du compteur/timer 1
 	  while (PIR1bits.TMR1IF == 0); // tester le passage à 1 du bit //d?indicateur TMR1IF

@@ -7,7 +7,7 @@
 
 
 #include <xc.h>
-#include "spi.h"
+#include "spiLCD.h"
 #include "LCM12864.h"
 #include "font.h"
 #define A0 PORTCbits.RC0
@@ -159,7 +159,7 @@ void Lcd_WriInvertext (unsigned char *chaine,unsigned char row,unsigned char col
     return D8;
 }
  
-void Lcd_Image (unsigned char *image){
+void Lcd_Image (const char *image){
     unsigned int i;
     for (i=0;i<256;i++)
     {

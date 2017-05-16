@@ -1,7 +1,8 @@
 #include <xc.h>
 #include "spi433.h"
 #include "ALPHATX.h"
-
+#include"LCM12864.h"
+#include "CR.h"
 #define	TRX_ALPHA_H
 #define CONF_TRX_433   0x80D8 // Valider TX RX REG 433
 #define  PMC_INIT   0x8201 // INIT TX ET RX
@@ -81,21 +82,22 @@ void INIT_ALPHA_MODULE (void){
 
 //******************************************************************************
 unsigned char  Send_FSK_DATA (char H,char L, unsigned int VAL){
-
+    char Trame[6]; 
  unsigned int CRC;
+ Trame[0]=H;
+ Trame[1]=L; 
+ Trame[2]=VAL>>8;
+ Trame[3]=VAL; 
+  CRC=calculCRC  (Trame, 4) ;
+  CCR1=CRC>>8 ;
+  CCR2=CRC ;
  rxstate=0;
-
- //Send_SPI43316 (PMC_INIT);
-
  Send_SPI43316 (PMC_TXEN);
  Send_SPI43316 (PMC_TXEN_SYNTHEN);
- Hdr= 1;
- Lengh= 2;
  VALH=VAL >>8;
  VALL=VAL ;
- //CRC=CRC16 (H,L, VAL) ;
- CCR1=CRC>>8 ;
- CCR2=CRC ;
+ 
+ 
 
 //ININT_INTERRUP_INTO ();
 //ININT_INTERRUP_TMR1 ();
@@ -131,11 +133,10 @@ while (IRQ);
 }
 //******************************************************************************
 void  GPIO (void){
- WDTCONbits.DEVCFG=5;
- ANCON0bits.PCFG4= 1;
- WDTCONbits.DEVCFG=6;
- TRISAbits.TRISA4=0;
+ TRISEbits.TRISE1=0;
  TRISBbits.TRISB0=1;
+ 
+ 
  RST = 0;
  tempo (100);
  RST=1;

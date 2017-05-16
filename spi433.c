@@ -1,6 +1,6 @@
 #include <xc.h>
 #define SPI1433_MASTER_ETAT_INIT 0b01000000
-#define SPI1433_MASTER_MODE_ON 0b00100001
+#define SPI1433_MASTER_MODE_ON 0b00100010
 #define CS_433 PORTBbits.RB4
 
 void init_SPI433 (void)
@@ -8,7 +8,7 @@ void init_SPI433 (void)
 {TRISCbits.TRISC5= 0; //SDO1 en sortie
  TRISCbits.TRISC4= 1; //SDI1 en entr?e
 TRISCbits.TRISC3= 0; //CLK1 en sortie
-TRISCbits.TRISC2= 0; // /CS1 en sortie
+TRISBbits.TRISB4= 0; // /CS1 en sortie
 SSP1STAT = SPI1433_MASTER_ETAT_INIT; // etat inittial du SPI
 SSP1CON1 = SPI1433_MASTER_MODE_ON; // SPI1 en mode master avec horloge F/16
 }
