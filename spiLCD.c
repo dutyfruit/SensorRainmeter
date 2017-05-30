@@ -1,16 +1,20 @@
 #include <xc.h>
+#include "spi433.h"
+#include "spiLCD.h"
 #define SPI1_MASTER_ETAT_INIT 0b01000000
 #define SPI1_MASTER_MODE_ON 0b00100001
 #define CS_LCD PORTCbits.RC2
+#define CS_433 PORTBbits.RB4 
 
-void init_SPI (void)
-
-{TRISCbits.TRISC5= 0; //SDO1 en sortie
- TRISCbits.TRISC4= 1; //SDI1 en entr?e
+void init_SPI (void){
+TRISCbits.TRISC5= 0; //SDO1 en sortie
+TRISCbits.TRISC4= 1; //SDI1 en entr?e
 TRISCbits.TRISC3= 0; //CLK1 en sortie
 TRISCbits.TRISC2= 0; // /CS1 en sortie
 SSP1STAT = SPI1_MASTER_ETAT_INIT; // etat inittial du SPI
 SSP1CON1 = SPI1_MASTER_MODE_ON; // SPI1 en mode master avec horloge F/16
+CS_433 = 0;
+CS_LCD = 1;
 }
 
 unsigned char Send_SPI8( unsigned char data_out )

@@ -11,11 +11,9 @@
 
 unsigned int N_AUGET (void)
 {
-   
    unsigned int NbAuget; // utiliser NbAuget comme variable 16 bits en nombre non sign?*
    NbAuget = 0;
    unsigned int i ;
-   
    
    T1CON = 0b00110000; // voir la question Q12
    TMR1H = 0;
