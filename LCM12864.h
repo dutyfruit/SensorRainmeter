@@ -14,9 +14,8 @@ extern void Lcd_all (void);
 extern void Lcd_Writext (unsigned char *chaine,unsigned char row,unsigned char col);
 extern void Lcd_WriteInt (int N,char row,char col,char N_Chiffre,char Taille);
 extern void Lcd_WriInvertext (unsigned char *chaine,unsigned char row,unsigned char col);
-extern unsigned int HEX_BCD(unsigned int HEX);
+extern unsigned char HEX_BCD(unsigned char HEX);
 extern void _delay_ms(unsigned int ms1); //delay of 10ms *
-extern void Lcd_Image (const char *image);
 extern void Lcd_clear (void);
 #endif	/* LCM12864_H */
 
