@@ -1,5 +1,5 @@
 #ifndef CR_H
 #define	CR_H
 
-extern unsigned int CRC16 ( unsigned int DAT );
+unsigned int calculCRC (char *Trame, char n_octet);
 #endif	/* CR_H */

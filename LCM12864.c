@@ -7,7 +7,7 @@
 
 
 #include <xc.h>
-#include "spi.h"
+#include "spiLCD.h"
 #include "LCM12864.h"
 #include "font.h"
 #define A0 PORTCbits.RC0
@@ -138,14 +138,28 @@ void Lcd_WriInvertext (unsigned char *chaine,unsigned char row,unsigned char col
     }
 }
 
- unsigned char HEX_BCD(unsigned char HEX){
-    unsigned int H;
-    H+=((HEX>>4)&0x000f)*10;
-    H+=HEX&0x000f;
-    return H;
- }
+ unsigned int HEX_BCD(unsigned int HEX)
+{ unsigned int D1,D2,D3,D4,D5,D6,D7,D8;
+   
+    D1= HEX/10;
+    D3=HEX-(D1*10);     
+    D2=D1/10;
+    D1=D1-(D2*10);
+    D4=D2/10;
+    D2=D2-(D4*10);
+    D5=D4/10;
+    D6=D4-(D5*10);
+    D7=D5/10;
+    D8=D5-(D7*10);
+    D8<<=4;
+    D8=(D8|D6)<<4 ;    
+    D8=(D8|D2)<<4 ;
+    D8=(D8|D1)<<4;
+    D8=(D8|D3);
+    return D8;
+}
  
-void Lcd_Image (unsigned char *image){
+void Lcd_Image (const char *image){
     unsigned int i;
     for (i=0;i<256;i++)
     {
@@ -155,5 +169,6 @@ void Lcd_Image (unsigned char *image){
 void Lcd_clear (void){
     int i;
     for (i=0;i<1024;i++)
-    {page_affiche[i]=0;}    
+    {page_affiche[i]=0;}
+    Lcd_all ();
 }
